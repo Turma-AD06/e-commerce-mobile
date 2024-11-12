@@ -18,4 +18,8 @@ export const styles = StyleSheet.create({
     padding: 4,
     color: textColors.primary,
   },
+  inputError: {
+    borderWidth: 1,
+    borderColor: theme.colors.red[500],
+  },
 });

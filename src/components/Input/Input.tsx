@@ -7,19 +7,21 @@ interface InputProps extends TextInputProps {
   label?: string;
   isRequired?: boolean;
   id: string;
+  error?: string;
 }
 
 const InputBase = (
-  { label, isRequired, secureTextEntry }: InputProps,
+  { label, isRequired, secureTextEntry, error, ...rest }: InputProps,
   ref: any
 ) => {
   return (
-    <FormControl label={label} isRequired={isRequired}>
-      <View style={styles.containerInput}>
+    <FormControl label={label} isRequired={isRequired} error={error}>
+      <View style={[styles.containerInput, error ? styles.inputError : null]}>
         <TextInput
           ref={ref}
           secureTextEntry={secureTextEntry}
           style={styles.input}
+          {...rest}
         />
       </View>
     </FormControl>

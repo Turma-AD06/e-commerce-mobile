@@ -20,11 +20,11 @@ export const styles = StyleSheet.create({
     gap: 8,
     flexDirection: "column",
   },
-  registerTextContainer: {
+  loginTextContainer: {
     alignItems: "center",
     flexDirection: "row",
   },
-  registerText: {
+  loginText: {
     fontSize: textSizes.md,
     fontWeight: "700",
   },

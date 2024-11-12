@@ -6,12 +6,14 @@ interface FormControlProps {
   children: ReactNode;
   label?: string;
   isRequired?: boolean;
+  error?: string;
 }
 
 export const FormControl = ({
   children,
   label,
   isRequired,
+  error,
 }: FormControlProps) => {
   return (
     <View style={styles.formControl}>
@@ -22,6 +24,7 @@ export const FormControl = ({
         </Text>
       )}
       {children}
+      {error && <Text style={styles.error}>{error}</Text>}
     </View>
   );
 };
