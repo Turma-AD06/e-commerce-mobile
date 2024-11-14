@@ -1,4 +1,9 @@
-import { backgroundColors, textColors, theme } from "@/src/themes/root";
+import {
+  backgroundColors,
+  buttonColors,
+  textColors,
+  theme,
+} from "@/src/themes/root";
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
@@ -6,7 +11,7 @@ export const styles = StyleSheet.create({
     padding: 8,
     flexGrow: 1,
     borderRadius: 8,
-    backgroundColor: backgroundColors.secondary,
+    backgroundColor: buttonColors.secondary,
   },
   buttonLink: {
     padding: 8,
@@ -14,7 +19,7 @@ export const styles = StyleSheet.create({
   },
   buttonPrimary: {
     padding: 8,
-    backgroundColor: theme.colors.blue[400],
+    backgroundColor: buttonColors.primary,
     flexGrow: 1,
     borderRadius: 8,
   },
