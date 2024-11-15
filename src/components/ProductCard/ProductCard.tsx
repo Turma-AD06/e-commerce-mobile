@@ -5,12 +5,11 @@ import { Image } from "expo-image";
 import { FontAwesome6 } from "@expo/vector-icons";
 import { ProductModel } from "@/src/services/product.service";
 import { useCart } from "@/src/contexts/CartContext";
-
+import { blurhash } from "@/src/themes/root";
 interface ProductCardProps {
   product: ProductModel;
 }
-const blurhash =
-  "|rF?hV%2WCj[ayj[a|j[az_NaeWBj@ayfRayfQfQM{M|azj[azf6fQfQfQIpWXofj[ayj[j[fQayWCoeoeaya}j[ayfQa{oLj?j[WVj[ayayj[fQoff7azayj[ayj[j[ayofayayayj[fQj[ayayj[ayfjj[j[ayjuayj[";
+
 export const ProductCard: FC<ProductCardProps> = ({ product }) => {
   const { addProduct } = useCart();
 

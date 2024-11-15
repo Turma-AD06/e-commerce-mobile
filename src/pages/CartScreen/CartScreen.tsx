@@ -1,9 +1,35 @@
-import { Text, View } from "react-native";
+import { ProductCartItem } from "@/src/components/ProductCartItem/ProductCartItem";
+import { useCart } from "@/src/contexts/CartContext";
+import { FlatList, Text, View } from "react-native";
+import { styles } from "./styles";
+import { Button } from "@/src/components/Button/Button";
 
 export const CartScreen = () => {
+  const { cart, totalCart, clearCart } = useCart();
   return (
-    <View>
-      <Text>Cart Screen</Text>
+    <View style={styles.container}>
+      <FlatList
+        data={cart}
+        style={styles.cartList}
+        keyExtractor={(item) => String(item.id)}
+        renderItem={({ item }) => <ProductCartItem item={item} />}
+      />
+      <View style={styles.footer}>
+        <Text style={styles.totalPrice}>
+          {(totalCart / 100).toLocaleString("pt-BR", {
+            style: "currency",
+            currency: "BRL",
+          })}
+        </Text>
+        <View style={styles.buttonContainer}>
+          <Button
+            text="Limpar Carrinho"
+            variant="secondary"
+            onPress={() => clearCart()}
+          />
+          <Button text="Checkout" onPress={() => {}} />
+        </View>
+      </View>
     </View>
   );
 };

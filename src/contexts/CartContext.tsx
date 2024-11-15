@@ -1,5 +1,6 @@
 import { createContext, ReactNode, useContext, useMemo, useState } from "react";
 import { ProductModel } from "../services/product.service";
+import { set } from "zod";
 
 interface ProductCartModel extends ProductModel {
   amount: number;
@@ -11,6 +12,8 @@ interface CartContextData {
   addProduct: (product: ProductModel) => void;
   removeProduct: (productId: number) => void;
   clearCart: () => void;
+  addQuantity: (productId: number) => void;
+  subQuantity: (productId: number) => void;
 }
 
 export const CartContext = createContext<CartContextData>(
@@ -19,6 +22,26 @@ export const CartContext = createContext<CartContextData>(
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [cart, setCart] = useState<ProductCartModel[]>([]);
+
+  const addQuantity = (productId: number) => {
+    const productIndex = cart.findIndex((item) => item.id === productId);
+    if (productIndex === -1) return;
+    const newCart = [...cart];
+    newCart[productIndex].amount++;
+
+    setCart(newCart);
+  };
+
+  const subQuantity = (productId: number) => {
+    const productIndex = cart.findIndex((item) => item.id === productId);
+    if (productIndex === -1) return;
+    const newCart = [...cart];
+    newCart[productIndex].amount--;
+    if (newCart[productIndex].amount === 0) {
+      newCart.splice(productIndex, 1);
+    }
+    setCart(newCart);
+  };
 
   const addProduct = (product: ProductModel) => {
     const productIndex = cart.findIndex((item) => item.id === product.id);
@@ -47,7 +70,15 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <CartContext.Provider
-      value={{ cart, totalCart, addProduct, removeProduct, clearCart }}
+      value={{
+        cart,
+        totalCart,
+        addProduct,
+        removeProduct,
+        clearCart,
+        addQuantity,
+        subQuantity,
+      }}
     >
       {children}
     </CartContext.Provider>

@@ -2,12 +2,14 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { HomeScreen } from "../pages/HomeScreen/HomeScreen";
 import { theme } from "../themes/root";
 import { FontAwesome6 } from "@expo/vector-icons";
-import { TouchableOpacity } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import { NativeStackScreenProps } from "react-native-screens/lib/typescript/native-stack/types";
+import { useCart } from "../contexts/CartContext";
 
 const Tab = createBottomTabNavigator();
 
 export const TabRouter = ({ navigation }: NativeStackScreenProps<any>) => {
+  const { cart } = useCart();
   return (
     <Tab.Navigator
       screenOptions={{
@@ -27,6 +29,30 @@ export const TabRouter = ({ navigation }: NativeStackScreenProps<any>) => {
               color={theme.colors.gray[300]}
               size={25}
             />
+            {cart.length > 0 && (
+              <View
+                style={{
+                  position: "absolute",
+                  bottom: -6,
+                  right: -3,
+                  backgroundColor: theme.colors.red[400],
+                  borderRadius: 50,
+                  width: 15,
+                  height: 15,
+                }}
+              >
+                <Text
+                  style={{
+                    color: theme.colors.white,
+                    textAlign: "center",
+                    fontSize: 12,
+                    fontWeight: "700",
+                  }}
+                >
+                  {cart.length}
+                </Text>
+              </View>
+            )}
           </TouchableOpacity>
         ),
       }}
