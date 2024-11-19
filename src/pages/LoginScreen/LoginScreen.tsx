@@ -3,11 +3,12 @@ import { Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { styles } from "./styles";
 import { Button } from "@/src/components/Button/Button";
-import { NativeStackScreenProps } from "react-native-screens/lib/typescript/native-stack/types";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Form } from "@/src/components/Form";
 import { useForm } from "react-hook-form";
 import { loginSchema } from "./schema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useAuth } from "@/src/contexts/AuthContext";
 
 export const LoginScreen = ({ navigation }: NativeStackScreenProps<any>) => {
   const {
@@ -19,9 +20,10 @@ export const LoginScreen = ({ navigation }: NativeStackScreenProps<any>) => {
     resolver: zodResolver(loginSchema),
     mode: "all",
   });
-
+  const { signIn } = useAuth();
   const onSubmit = (data: any) => {
-    console.log(data);
+    signIn(data);
+    navigation.navigate("Home");
   };
 
   return (

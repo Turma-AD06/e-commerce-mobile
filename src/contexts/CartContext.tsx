@@ -1,6 +1,13 @@
-import { createContext, ReactNode, useContext, useMemo, useState } from "react";
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { ProductModel } from "../services/product.service";
-import { set } from "zod";
+import { getItem, setItem } from "../services/cache.service";
 
 interface ProductCartModel extends ProductModel {
   amount: number;
@@ -22,6 +29,17 @@ export const CartContext = createContext<CartContextData>(
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [cart, setCart] = useState<ProductCartModel[]>([]);
+
+  useEffect(() => {
+    (async () => {
+      const cachedCart = await getItem("cart", []);
+      setCart(cachedCart);
+    })();
+  }, []);
+
+  useEffect(() => {
+    setItem("cart", cart);
+  }, [cart]);
 
   const addQuantity = (productId: number) => {
     const productIndex = cart.findIndex((item) => item.id === productId);

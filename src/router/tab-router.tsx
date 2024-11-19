@@ -5,11 +5,14 @@ import { FontAwesome6 } from "@expo/vector-icons";
 import { Text, TouchableOpacity, View } from "react-native";
 import { NativeStackScreenProps } from "react-native-screens/lib/typescript/native-stack/types";
 import { useCart } from "../contexts/CartContext";
+import { AccountScreen } from "../pages/AccountScreen/AccountScreen";
+import { useAuth } from "../contexts/AuthContext";
 
 const Tab = createBottomTabNavigator();
 
 export const TabRouter = ({ navigation }: NativeStackScreenProps<any>) => {
   const { cart } = useCart();
+  const { isLogged } = useAuth();
   return (
     <Tab.Navigator
       screenOptions={{
@@ -69,12 +72,16 @@ export const TabRouter = ({ navigation }: NativeStackScreenProps<any>) => {
       />
       <Tab.Screen
         name="Conta"
-        component={HomeScreen}
+        component={AccountScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <FontAwesome6 name="user-large" color={color} size={size} />
+            <FontAwesome6
+              name={isLogged ? "user-large" : "door-open"}
+              color={color}
+              size={size}
+            />
           ),
-          title: "Conta",
+          title: isLogged ? "Conta" : "Login",
         }}
       />
     </Tab.Navigator>
