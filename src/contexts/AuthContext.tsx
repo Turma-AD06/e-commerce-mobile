@@ -7,6 +7,7 @@ import {
 } from "react";
 import { SignInRequest, SignUpRequest } from "../services/auth.service";
 import { getItem, removeItem, setItem } from "../services/cache.service";
+import { api } from "../services/api";
 
 interface AuthContextData {
   isLogged: boolean;
@@ -40,6 +41,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     if (token !== null) {
       setIsLogged(true);
       setItem("token", token);
+      api.defaults.headers["Authorization"] = `Bearer ${token}`;
       return;
     }
   }, [token]);
